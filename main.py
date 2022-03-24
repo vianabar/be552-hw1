@@ -11,6 +11,12 @@ output_file = open(input_dir + chassis_name + '.output.json')
 
 
 data = json.load(input_file)
-
+'''
 for i in range(len(data)):
     print(data[i])    
+'''
+
+collection = (data[0]['collection'])
+print(collection)
+data[0]['collection'] = 'frog_sensors'
+print(data[0]['collection'])

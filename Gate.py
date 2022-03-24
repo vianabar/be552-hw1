@@ -1,43 +1,43 @@
 class Gate:
-	def	__init__(name, ymax, ymin, n, k):
-		gate.name = name
-		gate.ymax = ymax
-		gate.ymin = ymin
-		gate.n = n
-		gate.k = k
+	def	__init__(self, name, ymax, ymin, n, k):
+		self.name = name
+		self.ymax = ymax
+		self.ymin = ymin
+		self.n = n
+		self.k = k
 
-	def stretch(x):
+	def stretch(self, x):
 		if (x > 1.5):
 			raise ValueError("x can be at-most 1.5")
 
-		self.ymax = ymax * x
-		self.ymin = ymin / x
+		self.ymax = self.ymax * x
+		self.ymin = self.ymin / x
 
-	def increase_slope(x):
+	def increase_slope(self, x):
 		if (x > 1.05):
 			raise ValueError("x can be at-most 1.05")
 
-		self.n = n * x
+		self.n = self.n * x
 
-	def decrease_slope(x):
+	def decrease_slope(self, x):
 		if (x > 1.05):
 			raise ValueError("x can be at-most 1.05")
 
-		self.n = n / x
+		self.n = self.n / x
 
-	def stronger_prom(x):
-		self.ymax = ymax * x
-		self.ymin = ymin * x
+	def stronger_prom(self, x):
+		self.ymax = self.ymax * x
+		self.ymin = self.ymin * x
 
-	def weaker_prom(x):
-		self.ymax = ymax / x
-		self.ymin = ymin / x
+	def weaker_prom(self, x):
+		self.ymax = self.ymax / x
+		self.ymin = self.ymin / x
 
-	def strong_RBS(x):
-		self.k = k / x
+	def strong_RBS(self, x):
+		self.k = self.k / x
 
-	def weaker_RBS(x):
-		self.k = k * x
+	def weaker_RBS(self, x):
+		self.k = self.k * x
 
 
 

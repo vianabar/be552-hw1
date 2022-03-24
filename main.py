@@ -5,9 +5,18 @@ chassis_name = 'Eco1C1G1T1'
 input_dir = os.getcwd() + '/input/' 
 
 
-chassis_file = open(input_dir + 'Eco1C1G1T1.UCF.json')
+ucf_file = open(input_dir + chassis_name + '.UCF.json')
+input_file = open(input_dir + chassis_name + '.input.json')
+output_file = open(input_dir + chassis_name + '.output.json')
 
-data = json.load(chassis_file)
 
-for i in data['collection']:
-    print(i)    
+data = json.load(input_file)
+'''
+for i in range(len(data)):
+    print(data[i])    
+'''
+
+collection = (data[0]['collection'])
+print(collection)
+data[0]['collection'] = 'frog_sensors'
+print(data[0]['collection'])

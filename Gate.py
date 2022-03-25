@@ -1,17 +1,19 @@
 class Gate:
-    def	__init__(self, name, ymax, ymin, n, k):
+    def	__init__(self, name, ymax, ymin, n, k, gate_type):
         self.name = name
         self.ymax = ymax
         self.ymin = ymin
         self.n = n
         self.k = k
+        self.gate_type = gate_type
 
     def __str__(self):
         return "Name: " + str(self.name) + '\n' + \
                 "Ymax: " + str(self.ymax) + '\n' + \
                 "Ymin: " + str(self.ymin) + '\n' + \
                 "n: " + str(self.n) + '\n' + \
-                "k: " + str(self.k) + '\n'
+                "k: " + str(self.k) + '\n' + \
+                "Gate Type: " + str(self.gate_type) + '\n'
     
     def stretch(self, x):
         if (x > 1.5):

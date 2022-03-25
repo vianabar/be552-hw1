@@ -42,6 +42,7 @@ for i in range(len(input_parts)):
     ymin = None
     n = None
     k = None
+    gate_type = None
     for j in range(len(input_models)):
         if input_models[j]['name'][:3] == name[1:4]:
             for k in range(len(input_models[j]['parameters'])):
@@ -54,7 +55,7 @@ for i in range(len(input_parts)):
                 elif input_models[j]['parameters'][k]['name'] == 'beta':
                     k = input_models[j]['parameters'][k]['value']
     
-    input_signal = Gate.Gate(name, ymax, ymin, n, k)
+    input_signal = Gate.Gate(name, ymax, ymin, n, k, gate_type)
     input_signals.append(input_signal)
     
     
@@ -91,12 +92,12 @@ for i in range(len(output_models)):
     name = output_models[i]['name']
     name = name[:len(name) - 15]
     
-    output_signal = Gate.Gate(name, None, None, None, None)
+    output_signal = Gate.Gate(name, None, None, None, None, None)
     output_signals.append(output_signal)
     
 
 
-# Get assignment
+# Get assignment from *.UCF.json file
 ucf_file = open(input_dir + chassis_name + '.UCF.json')
 ucf_data = json.load(ucf_file)
 
@@ -142,29 +143,30 @@ for i in range(len(ucf_data)):
         ucf_device_rules.append(ucf_data[i])
     elif collection == 'circuit_rules':
         ucf_circuit_rules.append(ucf_data[i])
+    
+ucf_signals = []
 
-response_funcs = []
-## STILL HAVE TO DO UCF GATES ###
-'''
-for i in range(len(ucf_parts)):
-    name = ucf_parts[i]['name']
+for i in range(len(ucf_gates)):
+    name = ucf_gates[i]['name']
     ymax = None
     ymin = None
     n = None
     k = None
+    gate_type = ucf_gates[i]['gate_type']
     for j in range(len(ucf_models)):
-        ucf_models_name = ucf_models[j]['name']
-        if ucf_models_name[:len(ucf_models_name) - 6) == name[1:4]:
-            for k in range(len(input_models[j]['parameters'])):
-                if input_models[j]['parameters'][k]['name'] == 'ymax':
-                    ymax = input_models[j]['parameters'][k]['value']
-                elif input_models[j]['parameters'][k]['name'] == 'ymin':
-                    ymin = input_models[j]['parameters'][k]['value']
-                elif input_models[j]['parameters'][k]['name'] == 'alpha':
-                    n = input_models[j]['parameters'][k]['value']
-                elif input_models[j]['parameters'][k]['name'] == 'beta':
-                    k = input_models[j]['parameters'][k]['value']
+        if ucf_models[j]['name'] == ucf_gates[i]['model']:
+            for k in range(len(ucf_models[j]['parameters'])):
+                if ucf_models[j]['parameters'][k]['name'] == 'ymax':
+                    ymax = ucf_models[j]['parameters'][k]['value']
+                elif ucf_models[j]['parameters'][k]['name'] == 'ymin':
+                    ymin = ucf_models[j]['parameters'][k]['value']
+                elif ucf_models[j]['parameters'][k]['name'] == 'alpha':
+                    n = ucf_models[j]['parameters'][k]['value']
+                elif ucf_models[j]['parameters'][k]['name'] == 'beta':
+                    k = ucf_models[j]['parameters'][k]['value']
     
-    input_signal = Gate.Gate(name, ymax, ymin, n, k)
-    input_signals.append(input_signal)
-''' 
+    ucf_signal = Gate.Gate(name, ymax, ymin, n, k, gate_type)
+    ucf_signals.append(ucf_signal)
+
+for i in range(len(ucf_signals)):
+    print(ucf_signals[i])

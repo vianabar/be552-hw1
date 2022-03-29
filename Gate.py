@@ -18,6 +18,10 @@ class Gate:
         self.truth_table = None
         self.truth_table_bool = None
         self.score = None
+        
+        if self.gate_type != 'Output':
+            self.calculate_truth_table()
+            self.calculate_score()
 
     def __str__(self):
         
@@ -38,9 +42,9 @@ class Gate:
         elif len(self.inputs) == 1:
             truth_table_str = "| " + str(self.inputs[0].name) + str(" " * (12 - len(self.inputs[0].name))) + " | " + str(self.name) + str(" " * (12 - len(self.name))) + " |" + "\n" + \
                               "| " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
-                              "| " + str(round_sig(self.inputs[0].off_max)) + str(" " + (12 - len(str(round_sig(self.inputs[0].off_max))))) + " | " +  str(round_sig(self.truth_table[0])) + str(" " * (12 - len(str(round_sig(self.truth_table[0]))))) + " |" + "\n" + \
+                              "| " + str(round_sig(self.inputs[0].off_max)) + str(" " * (12 - len(str(round_sig(self.inputs[0].off_max))))) + " | " +  str(round_sig(self.truth_table[0])) + str(" " * (12 - len(str(round_sig(self.truth_table[0]))))) + " |" + "\n" + \
                               "| " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
-                              "| " + str(round_sig(self.inputs[0].on_min)) + str(" " + (12 - len(str(round_sig(self.inputs[0].on_min))))) + " | " +  str(round_sig(self.truth_table[1])) + str(" " * (12 - len(str(round_sig(self.truth_table[1]))))) + " |" + "\n" + \
+                              "| " + str(round_sig(self.inputs[0].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[0].on_min))))) + " | " +  str(round_sig(self.truth_table[1])) + str(" " * (12 - len(str(round_sig(self.truth_table[1]))))) + " |" + "\n" + \
                               "| " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n"
         elif len(self.inputs) == 2:
             truth_table_str = "| " + str(self.inputs[0].name) + str(" " * (12 - len(self.inputs[0].name))) + " | " + str(self.inputs[1].name) + str(" " * (12 - len(self.inputs[1].name))) + " | " + str(self.name) + str(" " * (12 - len(self.name))) + " |" + "\n" + \
@@ -89,21 +93,25 @@ class Gate:
     def weaker_RBS(self, x):
         self.k = self.k * x
         
-    def assign_input(self, gate):
+    def assign_input(self, gate=None):
         if (len(self.inputs) >= 2):
             raise ValueError("Exceeded Maximum of 2 Inputs")
+        if gate is not None:
+            self.inputs.append(gate)
+            
+        self.calculate_truth_table()
+        self.calculate_score()
         
-        self.inputs.append(gate)
+    def erase_inputs(self):
+        self.inputs = []
+        self.calculate_truth_table()
+        self.calculate_score()
         
-    def calculate_y(self, in_0, in_1, min_or_max):
+    def calculate_y(self, in_0, in_1):
         
         x = in_0 + in_1
         
-        if min_or_max == 0:
-            output = self.ymin + ((self.ymin - self.ymin) / 
-                                  (1.0 + (x/self.k) ** self.n))
-        else:
-            output = self.ymin + ((self.ymax - self.ymin) / 
+        output = self.ymin + ((self.ymax - self.ymin) / 
                                   (1.0 + (x/self.k) ** self.n))
         
         return output
@@ -111,29 +119,24 @@ class Gate:
     def calculate_truth_table(self):
         
         # Zero inputs
-        '''
-        if not self.inputs:
-            self.off_max = self.ymin
-            self.on_min = self.ymax
-        '''
         if len(self.inputs) == 0:
             self.truth_table = None
             self.truth_table_bool = None
             
         # One input
-        if len(self.inputs ) == 1:
+        if len(self.inputs) == 1:
             if self.gate_type == 'OR' or self.gate_type == 'AND':
                 ## |0| =  |0|
                 ## |1|    |1|
                 self.truth_table_bool = [0, 1]
-                self.truth_table = [self.calculate_y(self.inputs[0].off_max, 0, 0),
-                                    self.calculate_y(self.inputs[0].on_min, 0, 1)]
+                self.truth_table = [self.calculate_y(self.inputs[0].off_max, 0),
+                                    self.calculate_y(self.inputs[0].on_min, 0)]
             elif self.gate_type == 'NOT' or 'NOR':                     
                 ## |0|| = |1|
                 ## |1|    |0|
                 self.truth_table_bool = [1, 0]
-                self.truth_table = [self.calculate_y(self.inputs[0].on_min, 0, 1),
-                                    self.calculate_y(self.inputs[0].off_max, 0, 0)]
+                self.truth_table = [self.calculate_y(self.inputs[0].off_max, 0),
+                                    self.calculate_y(self.inputs[0].on_min, 0)]
 
         
         # Two inputs
@@ -145,13 +148,13 @@ class Gate:
                 ## |1|1|   |1|
                 self.truth_table_bool = [0, 1, 1, 1]
                 self.truth_table = [self.calculate_y(self.inputs[0].off_max, 
-                                                     self.inputs[1].off_max, 0),
+                                                     self.inputs[1].off_max),
                                     self.calculate_y(self.inputs[0].off_max,
-                                                     self.inputs[1].on_min, 1),
+                                                     self.inputs[1].on_min),
                                     self.calculate_y(self.inputs[0].on_min,
-                                                     self.inputs[1].off_max, 1),
+                                                     self.inputs[1].off_max),
                                     self.calculate_y(self.inputs[0].on_min,
-                                                     self.inputs[1].off_max, 1)]
+                                                     self.inputs[1].on_min)]
             elif self.gate_type == 'AND':
                 ## |0|0| = |0|
                 ## |0|1|   |0|
@@ -159,13 +162,13 @@ class Gate:
                 ## |1|1|   |1|
                 self.truth_table_bool = [0, 0, 0, 1]
                 self.truth_table = [self.calculate_y(self.inputs[0].off_max, 
-                                                     self.inputs[1].off_max, 0),
+                                                     self.inputs[1].off_max),
                                     self.calculate_y(self.inputs[0].off_max,
-                                                     self.inputs[1].on_min, 0),
+                                                     self.inputs[1].on_min),
                                     self.calculate_y(self.inputs[0].on_min,
-                                                     self.inputs[1].off_max, 0),
+                                                     self.inputs[1].off_max),
                                     self.calculate_y(self.inputs[0].on_min,
-                                                     self.inputs[1].off_max, 1)]
+                                                     self.inputs[1].on_min)]
                                         
             elif self.gate_type == 'NOR':
                 ## |0|0| = |1|
@@ -174,13 +177,13 @@ class Gate:
                 ## |1|1|   |0|
                 self.truth_table_bool = [1, 0, 0, 0]
                 self.truth_table = [self.calculate_y(self.inputs[0].off_max, 
-                                                         self.inputs[1].off_max, 1),
-                                        self.calculate_y(self.inputs[0].off_max,
-                                                         self.inputs[1].on_min, 0),
-                                        self.calculate_y(self.inputs[0].on_min,
-                                                         self.inputs[1].off_max, 0),
-                                        self.calculate_y(self.inputs[0].on_min,
-                                                         self.inputs[1].off_max, 0)]
+                                                     self.inputs[1].off_max),
+                                    self.calculate_y(self.inputs[0].off_max,
+                                                     self.inputs[1].on_min),
+                                    self.calculate_y(self.inputs[0].on_min,
+                                                     self.inputs[1].off_max),
+                                    self.calculate_y(self.inputs[0].on_min,
+                                                     self.inputs[1].on_min)]
 
     def calculate_score(self):
         if len(self.inputs) == 0:

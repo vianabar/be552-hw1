@@ -1,3 +1,4 @@
+import copy
 import json 
 import os
 
@@ -36,15 +37,17 @@ for i in range(len(input_data)):
     
 input_signals = []
 
-for i in range(len(input_parts)):
-    name = input_parts[i]['name']
+for i in range(len(input_structures)):
+    name = input_structures[i]['outputs'][0]
     ymax = None
     ymin = None
     n = None
     k = None
-    gate_type = None
+    gate_type = 'Input'
     for j in range(len(input_models)):
-        if input_models[j]['name'][:3] == name[1:4]:
+        models_label = input_models[j]['name']
+        structures_label = input_structures[i]['name']
+        if models_label[:len(models_label) - 13] == structures_label[:len(structures_label) - 17]:
             for k in range(len(input_models[j]['parameters'])):
                 if input_models[j]['parameters'][k]['name'] == 'ymax':
                     ymax = input_models[j]['parameters'][k]['value']
@@ -92,7 +95,7 @@ for i in range(len(output_models)):
     name = output_models[i]['name']
     name = name[:len(name) - 15]
     
-    output_signal = Gate.Gate(name, None, None, None, None, None)
+    output_signal = Gate.Gate(name, None, None, None, None, 'Output')
     output_signals.append(output_signal)
     
 
@@ -167,6 +170,3 @@ for i in range(len(ucf_gates)):
     
     ucf_signal = Gate.Gate(name, ymax, ymin, n, k, gate_type)
     ucf_signals.append(ucf_signal)
-
-for i in range(len(ucf_signals)):
-    print(ucf_signals[i])

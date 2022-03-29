@@ -5,6 +5,8 @@ import os
 import Gate
 import reading_functions as read
 
+import Circuit
+
 chassis_name = 'Eco1C1G1T1'
 input_dir = os.getcwd() + '/input/' 
 
@@ -19,3 +21,22 @@ output_signals = read.read_output_json(input_dir + chassis_name + '.output.json'
     
 # Get assignment from *.UCF.json file
 ucf_signals = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')
+
+
+gate_a = input_signals[0]
+gate_b = input_signals[1]
+gate_c = ucf_signals[2]
+
+# gate_c.assign_input(gate_a)
+# gate_c.assign_input(gate_b)
+
+c = Circuit.Circuit()
+c.addVertex(gate_a)
+c.addVertex(gate_b)
+c.addVertex(gate_c)
+c.addEdge(gate_a,gate_c)
+c.addEdge(gate_b,gate_c)
+c.BFS(gate_c)
+
+
+

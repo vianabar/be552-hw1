@@ -1,7 +1,10 @@
 from collections import defaultdict
 import math
+import networkx as nx
+import matplotlib.pyplot as plt
 
 import Gate
+
 
 # Adapted from: https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
 
@@ -10,6 +13,7 @@ class Circuit:
         self.adjList = defaultdict(list) #adjacency list
         self.V = 0 #num of vertices
         self.visited = dict()
+        self.visual = []
 
     def addVertex(self, gate):
         self.V = self.V + 1
@@ -23,8 +27,16 @@ class Circuit:
     def addEdge(self, in_gate, out_gate):
         out_gate.assign_input(in_gate)
         self.adjList[out_gate.name] = out_gate.inputs
-        
-        
+        temp = [in_gate, out_gate]
+        self.visual.append(temp); 
+
+    def visualize(self):
+        G = nx.Graph()
+        G.add_edges_from(self.visual);
+        nx.draw_networkx(G);
+        plt.show()
+
+
     def BFS(self, s): # input s is output_gate
         for vertex in self.adjList:
             self.visited[vertex.name] = False
@@ -44,6 +56,9 @@ class Circuit:
                 if self.visited[i.name] == False:
                     queue.append(i)
                     self.visited[i.name] == True
+
+
+        self.visualize()
 
 
 

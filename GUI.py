@@ -35,6 +35,22 @@ frame = LabelFrame(root, width = 1200, height = 500, text="Main Frame", pady=5)
 frame.grid(row=0, column=0, columnspan=5, padx=20)
 frame.grid_propagate(0)
 
+# container = ttk.Frame(root)
+# canvas = tk.Canvas(container)
+# scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+# scrollable_frame = ttk.Frame(canvas)
+
+# scrollable_frame.bind(
+#     "<Configure>",
+#     lambda e: canvas.configure(
+#         scrollregion=canvas.bbox("all")
+#     )
+# )
+
+# canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+# canvas.configure(yscrollcommand=scrollbar.set)
+
+
 p_frame = LabelFrame(root, width = 200 , height = 200, text="Promoters:")
 p_frame.grid(row=1, column=0, rowspan=4)
 p_frame.grid_propagate(0)
@@ -94,10 +110,11 @@ def upload():
 	#pass filename into function that will read lines of command
 
 def generate_circuit():
-	myLabel = Label(frame, text = "Circuit will show here").grid()
+	
 	button_circuit['state'] = 'disabled'
 
-	c.BFS()
+	stats = c.BFS()
+	myLabel = Label(frame, text = stats ).grid()
 
 	#call function that will create graph and visualize it -> display on frame
 

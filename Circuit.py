@@ -58,7 +58,7 @@ class Circuit:
 
             s = queue.pop(0)
 
-            circuit_str.append(s.get_stats())
+            circuit_str =  circuit_str + s.get_stats()
 
             for i in self.adjList[s.name]:
                 if self.visited[i.name] == False:

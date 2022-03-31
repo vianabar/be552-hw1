@@ -42,6 +42,7 @@ class Circuit:
         plt.show()
 
     def BFS(self): # input s is output_gate
+        circuit_str = ""
         
         s = self.root
         
@@ -57,12 +58,14 @@ class Circuit:
 
             s = queue.pop(0)
 
-            s.get_stats()
+            circuit_str.append(s.get_stats())
 
             for i in self.adjList[s.name]:
                 if self.visited[i.name] == False:
                     queue.append(i)
                     self.visited[i.name] == True
+        
+        return circuit_str
 
         '''
         self.visualize()

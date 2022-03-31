@@ -23,9 +23,10 @@ output_signals = read.read_output_json(input_dir + chassis_name + '.output.json'
 ucf_signals = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')[0]
 
 
-gate_a = input_signals['pTet']
-gate_b = input_signals['pTet']
-gate_c = ucf_signals['H1_HlyIIR']
+gate_a = copy.deepcopy(input_signals['pTet'])
+gate_b = copy.deepcopy(input_signals['pTet'])
+gate_c = copy.deepcopy(ucf_signals['H1_HlyIIR'])
+gate_d = copy.deepcopy(output_signals['YFP'])
 
 # gate_c.assign_input(gate_a)   
 # gate_c.assign_input(gate_b)
@@ -36,7 +37,12 @@ c.addVertex(gate_b)
 c.addVertex(gate_c)
 c.addEdge(gate_a,gate_c)
 c.addEdge(gate_b,gate_c)
-#c.BFS(gate_c)
+
+
+
+c.addVertex(gate_d)
+c.addEdge(gate_c, gate_d)
+c.BFS(gate_d)
 
 
 

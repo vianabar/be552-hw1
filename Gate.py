@@ -22,6 +22,7 @@ class Gate:
         if self.gate_type != 'Output':
             self.calculate_truth_table()
             self.calculate_score()
+            
 
     def __str__(self):
         
@@ -32,12 +33,12 @@ class Gate:
                 "k: " + str(self.k) + '\n' + \
                 "Gate Type: " + str(self.gate_type) + '\n' + \
                 "Truth Table: " + '\n' + \
-                self.print_truth_table()
+                self.print_truth_table() + '\n\n'
     
     def print_truth_table(self):
         truth_table_str = ""
         
-        if len(self.inputs) == 0:
+        if len(self.inputs) == 0 or self.gate_type == 'Output':
             truth_table_str = "No Truth Table"
         elif len(self.inputs) == 1:
             truth_table_str = "| " + str(self.inputs[0].name) + str(" " * (12 - len(self.inputs[0].name))) + " | " + str(self.name) + str(" " * (12 - len(self.name))) + " |" + "\n" + \
@@ -56,7 +57,7 @@ class Gate:
                               "| " + str(round_sig(self.inputs[0].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[0].on_min))))) + " | " +  str(round_sig(self.inputs[1].off_max)) + str(" " * (12 - len(str(round_sig(self.inputs[1].off_max))))) + " | " +  str(round_sig(self.truth_table[2])) + str(" " * (12 - len(str(round_sig(self.truth_table[2]))))) + " |" + "\n" + \
                               "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
                               "| " + str(round_sig(self.inputs[0].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[0].on_min))))) + " | " +  str(round_sig(self.inputs[1].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[1].on_min))))) + " | " +  str(round_sig(self.truth_table[3])) + str(" " * (12 - len(str(round_sig(self.truth_table[3]))))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n"
+                              "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |"
                 
         return truth_table_str
     
@@ -101,8 +102,9 @@ class Gate:
             raise ValueError("Exceeded Maximum of 2 Inputs")
         if gate is not None:
             self.inputs.append(gate)
-            
-        self.calculate_truth_table()
+        
+        if self.gate_type != 'Output':
+            self.calculate_truth_table()
         self.calculate_score()
         
     def erase_inputs(self):
@@ -176,12 +178,18 @@ class Gate:
 
 
     def calculate_score(self):
-        if len(self.inputs) == 0:
+        
+        # Output
+        if self.gate_type == 'Output':
+            self.on_min = self.inputs[0].on_min
+            self.off_max = self.inputs[0].off_max
+        
+        elif len(self.inputs) == 0:
             self.off_max = self.ymin
             self.on_min = self.ymax
             self.score = math.log(self.on_min/self.off_max)
         
-        if len(self.inputs) > 0:
+        elif len(self.inputs) > 0:
             off_vals = []
             on_vals = []
             for i in range(len(self.truth_table_bool)):

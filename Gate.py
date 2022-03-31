@@ -5,7 +5,7 @@ def round_sig(x, sig=5):
 
 class Gate:
     def	__init__(self, name, ymax, ymin, n, k, gate_type):
-        self.name = name + ': 0'
+        self.name = name
         self.ymax = ymax
         self.ymin = ymin
         self.n = n
@@ -95,7 +95,7 @@ class Gate:
 
     def weaker_RBS(self, x):
         self.k = self.k * x
-        
+    
     def assign_input(self, gate=None):
         if (len(self.inputs) >= 2):
             raise ValueError("Exceeded Maximum of 2 Inputs")

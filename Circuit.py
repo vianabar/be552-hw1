@@ -14,18 +14,20 @@ class Circuit:
         self.V = 0 #num of vertices
         self.visited = dict()
         self.visual = []
-        
-    def __str__(self, output_gate):
-        self.BFS(output_gate)
+        self.root
 
     def addVertex(self, gate):
         self.V = self.V + 1
+        new_name = gate.name + ': 0'
+        gate.name = new_name
         if gate.name in self.adjList: # if gate: num exists, assign new 
             new_name = gate.name[:-1] + str(int(gate.name[-1]) + 1)
-            gate.change_name(new_name)
+            gate.name = new_name
 
         self.adjList[gate.name] = gate.inputs
         self.visited[gate.name] = False
+        if gate.gate_type == 'Output':
+            self.root = gate
 
     def addEdge(self, in_gate, out_gate):
         out_gate.assign_input(in_gate)
@@ -35,12 +37,14 @@ class Circuit:
 
     def visualize(self):
         G = nx.Graph()
-        G.add_edges_from(self.visual);
-        nx.draw_networkx(G);
+        G.add_edges_from(self.visual)
+        nx.draw_networkx(G)
         plt.show()
 
-
-    def BFS(self, s): # input s is output_gate
+    def BFS(self): # input s is output_gate
+        
+        s = self.root
+        
         for vertex in self.adjList:
             self.visited[vertex] = False
 
@@ -59,31 +63,12 @@ class Circuit:
                 if self.visited[i.name] == False:
                     queue.append(i)
                     self.visited[i.name] == True
-        
 
+        '''
         self.visualize()
-        
+        '''
     
-    def BFS_optimization(self, s):
-        for vertex in self.adjList:
-            self.visited[vertex] = False
-
-        queue = []
-
-        queue.append(s)
-        self.visited[s.name] = True
-
-        while queue:
-
-            s = queue.pop(0)
-
-            print(s)
-
-            for i in self.adjList[s.name]:
-                if self.visited[i.name] == False:
-                    queue.append(i)
-                    self.visited[i.name] == True
-
+    
 
 
 

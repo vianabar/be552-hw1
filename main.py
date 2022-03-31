@@ -23,9 +23,9 @@ output_signals = read.read_output_json(input_dir + chassis_name + '.output.json'
 ucf_signals = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')
 
 
-gate_a = input_signals[0]
-gate_b = input_signals[1]
-gate_c = ucf_signals[2]
+gate_a = input_signals[0]['pTet']
+gate_b = input_signals[0]['pTac']
+gate_c = ucf_signals[0]['H1_HlyIIR']
 
 # gate_c.assign_input(gate_a)
 # gate_c.assign_input(gate_b)

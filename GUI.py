@@ -78,6 +78,7 @@ def upload():
 	with open(filename) as f:
 		lines = f.readlines()
 
+	global c
 	c = Circuit.Circuit()
 
 	for line in lines:
@@ -93,7 +94,7 @@ def upload():
 	#pass filename into function that will read lines of command
 
 def generate_circuit():
-	myLabel = Label(frame, text = "Circuit will show here").pack()
+	myLabel = Label(frame, text = "Circuit will show here").grid()
 	button_circuit['state'] = 'disabled'
 
 	c.BFS()
@@ -157,8 +158,8 @@ button_upload.grid(row=4, column=3)
 button_circuit = Button(root, text="Design circuit", command=generate_circuit)
 button_circuit.grid(row=1, column=4)
 
-button_circuit = Button(root, text="Optimize circuit", command=optimize_circuit)
-button_circuit.grid(row=2, column=4)
+button_optimize = Button(root, text="Optimize circuit", command=optimize_circuit)
+button_optimize.grid(row=2, column=4)
 
 button_reset = Button(root, text="Start over", command=reset)
 button_reset.grid(row=3, column=4)

@@ -61,9 +61,14 @@ def upload():
 		message=filename
 	)
 
+
+	#pass filename into function that will read lines of command
+
 def generate_circuit():
 	myLabel = Label(frame, text = "Circuit will show here").pack()
 	button_circuit['state'] = 'disabled'
+
+	#call function that will create graph and visualize it -> display on frame
 
 def optimize_circuit():
 	#connect with optimization function and produce message window comparing

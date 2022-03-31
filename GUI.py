@@ -1,9 +1,13 @@
+import os
+import reading_functions as read
+
 from tkinter import *
 from tkinter import ttk
 # from PIL import ImageTK, Image
 # pip install Pillow
 
-
+chassis_name = 'Eco1C1G1T1'
+input_dir = os.getcwd() + '/input/' 
 
 root = Tk()
 root.title("Genetic Circuit Design Automation")
@@ -49,26 +53,33 @@ def reset():
  #       widget.destroy()
 
 
-promoters = [
-	"Promoter1", 
-	"Promoter2", 
-	"Promoter3", 
-	"Promoter4"
-]
+promoters = read.read_input_json(input_dir + chassis_name + '.input.json')[1]
 
-UCF_gates = [
-	"UCF_g1", 
-	"UCF_g2", 
-	"UCF_g3", 
-	"UCF_g4"
-]
+UCF_gates = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')[1]
 
-output_gates = [
-	"output_g1", 
-	"output_g2", 
-	"output_g3", 
-	"output_g4"
-]
+output_gates = read.read_output_json(input_dir + chassis_name + '.output.json')[1]
+
+
+# promoters = [
+# 	"Promoter1", 
+# 	"Promoter2", 
+# 	"Promoter3", 
+# 	"Promoter4"
+# ]
+
+# UCF_gates = [
+# 	"UCF_g1", 
+# 	"UCF_g2", 
+# 	"UCF_g3", 
+# 	"UCF_g4"
+# ]
+
+# output_gates = [
+# 	"output_g1", 
+# 	"output_g2", 
+# 	"output_g3", 
+# 	"output_g4"
+# ]
 
 
 # clicked = StringVar()

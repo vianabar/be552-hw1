@@ -32,9 +32,12 @@ def read_input_json(path):
             input_parts.append(input_data[i])
         
     input_signals = []
+    input_names = []
 
     for i in range(len(input_structures)):
         name = input_structures[i]['outputs'][0]
+        input_names.append(name)
+
         ymax = None
         ymin = None
         n = None
@@ -58,7 +61,7 @@ def read_input_json(path):
         input_signals.append(input_signal)
     
     input_file.close()
-    return input_signals
+    return input_signals, input_names
 
 
 def read_output_json(path):
@@ -89,16 +92,18 @@ def read_output_json(path):
             output_parts.append(output_data[i])
             
     output_signals = []
+    output_names = []
 
     for i in range(len(output_models)):
         name = output_models[i]['name']
         name = name[:len(name) - 15]
-        
+        output_names.append(name)
+
         output_signal = Gate.Gate(name, None, None, None, None, 'Output')
         output_signals.append(output_signal)
         
     output_file.close()
-    return output_signals
+    return output_signals, output_names
 
 
 def read_ucf_json(path):
@@ -150,6 +155,7 @@ def read_ucf_json(path):
             ucf_circuit_rules.append(ucf_data[i])
         
     ucf_signals = []
+    ucf_names = []
 
     for i in range(len(ucf_gates)):
         name = ucf_gates[i]['name']
@@ -170,8 +176,9 @@ def read_ucf_json(path):
                     elif ucf_models[j]['parameters'][k]['name'] == 'beta':
                         k = ucf_models[j]['parameters'][k]['value']
         
+        ucf_names.append(name)
         ucf_signal = Gate.Gate(name, ymax, ymin, n, k, gate_type)
         ucf_signals.append(ucf_signal)
         
     ucf_file.close()
-    return ucf_signals
+    return ucf_signals, ucf_names

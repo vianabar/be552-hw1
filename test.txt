@@ -1,0 +1,11 @@
+gate_a = input_signals[0]['pTet']
+gate_b = input_signals[0]['pTac']
+gate_c = ucf_signals[0]['H1_HlyIIR']
+
+c = Circuit.Circuit()
+c.addVertex(gate_a)
+c.addVertex(gate_b)
+c.addVertex(gate_c)
+c.addEdge(gate_a,gate_c)
+c.addEdge(gate_b,gate_c)
+c.BFS(gate_c)

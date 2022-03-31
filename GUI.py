@@ -1,5 +1,6 @@
 import os
 import reading_functions as read
+import copy
 
 from tkinter import *
 from tkinter import ttk
@@ -11,11 +12,23 @@ from tkinter import messagebox as mb
 chassis_name = 'Eco1C1G1T1'
 input_dir = os.getcwd() + '/input/' 
 
+# Get input signals from *.input.json file
+input_signals = read.read_input_json(input_dir + chassis_name + '.input.json')[0]
+
+       
+# Get output signals from *.output.json file
+output_signals = read.read_output_json(input_dir + chassis_name + '.output.json')[0]
+
+    
+# Get assignment from *.UCF.json file
+ucf_signals = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')[0]
+
 root = Tk()
 root.title("Genetic Circuit Design Automation")
 # root.iconbitmap('filepath/iconname.ico')
 root.geometry("1280x720")
 
+# Creating frames
 frame = LabelFrame(root, width = 1200, height = 500, text="Main Frame", pady=5)
 frame.grid(row=0, column=0, columnspan=5, padx=20)
 frame.grid_propagate(0)
@@ -33,13 +46,17 @@ o_frame = LabelFrame(root, width = 200 , height = 200, text="Output Gates:")
 o_frame.grid(row=1, column=2, rowspan=4)
 o_frame.grid_propagate(0)
 
-
+# Function for promoters combobox
 def selected_p(event):
+	# name = combo1.get()
+	# new_gate = copy.deepcopy(input_signals[name])
 	myLabel = Label(p_frame, text = combo1.get()).grid()
 
+# Function for gates combobox
 def selected_g(event):
 	myLabel = Label(g_frame, text = combo2.get()).grid()
 
+# Function
 def selected_o(event):
 	myLabel = Label(o_frame, text = combo3.get()).grid()
 
@@ -56,10 +73,17 @@ def upload():
 		filetypes=filetypes
 		)
 
-	mb.showinfo(
-		title='Selected File',
-		message=filename
-	)
+	with open(filename) as f:
+		lines = f.readlines()
+
+	for line in lines:
+		if not line.isspace():
+			exec(line)
+
+	# mb.showinfo(
+	# 	title='Selected File',
+	# 	message=better_lines
+	# )
 
 
 	#pass filename into function that will read lines of command

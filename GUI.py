@@ -49,8 +49,15 @@ def reset():
 	if button_circuit['state'] == 'disabled':
 		button_circuit['state'] = 'normal'
 
-	# for widget in p_frame.winfo_children():
- #       widget.destroy()
+	for widget in p_frame.winfo_children():
+		widget.destroy()
+
+	for widget in g_frame.winfo_children():
+		widget.destroy()
+
+	for widget in o_frame.winfo_children():
+		widget.destroy()
+
 
 
 promoters = read.read_input_json(input_dir + chassis_name + '.input.json')[1]

@@ -1,6 +1,7 @@
 import os
 import reading_functions as read
 import copy
+import Circuit
 
 from tkinter import *
 from tkinter import ttk
@@ -22,6 +23,7 @@ output_signals = read.read_output_json(input_dir + chassis_name + '.output.json'
     
 # Get assignment from *.UCF.json file
 ucf_signals = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')[0]
+
 
 root = Tk()
 root.title("Genetic Circuit Design Automation")
@@ -76,6 +78,8 @@ def upload():
 	with open(filename) as f:
 		lines = f.readlines()
 
+	c = Circuit.Circuit()
+
 	for line in lines:
 		if not line.isspace():
 			exec(line)
@@ -91,6 +95,8 @@ def upload():
 def generate_circuit():
 	myLabel = Label(frame, text = "Circuit will show here").pack()
 	button_circuit['state'] = 'disabled'
+
+	c.BFS()
 
 	#call function that will create graph and visualize it -> display on frame
 

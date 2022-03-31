@@ -14,7 +14,7 @@ class Circuit:
         self.V = 0 #num of vertices
         self.visited = dict()
         self.visual = []
-        self.root
+        self.root = None
 
     def addVertex(self, gate):
         self.V = self.V + 1
@@ -57,7 +57,7 @@ class Circuit:
 
             s = queue.pop(0)
 
-            print(s)
+            s.get_stats()
 
             for i in self.adjList[s.name]:
                 if self.visited[i.name] == False:

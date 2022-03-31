@@ -27,6 +27,10 @@ class Gate:
     def __str__(self):
         
         return "Name: " + str(self.name) + '\n' + \
+                "Gate Type: " + str(self.gate_type) + '\n\n'
+
+    def get_stats(self): 
+        return "Name: " + str(self.name) + '\n' + \
                 "Ymax: " + str(self.ymax) + '\n' + \
                 "Ymin: " + str(self.ymin) + '\n' + \
                 "n: " + str(self.n) + '\n' + \

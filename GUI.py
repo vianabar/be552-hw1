@@ -107,7 +107,7 @@ combo2.bind("<<ComboboxSelected>>", selected_g)
 combo2['state'] = 'readonly'
 combo2.pack()
 
-combo3 = ttk.Combobox(root, value=UCF_gates)
+combo3 = ttk.Combobox(root, value=output_gates)
 combo3.set("Select output gate(s)")
 combo3.bind("<<ComboboxSelected>>", selected_o)
 combo3['state'] = 'readonly'

@@ -104,7 +104,8 @@ def selected_op(event):
 
 def get_xval():
 	xval = float(xval_entry.get())
-	gate = combo1.get()
+	gate_name = combo1.get()
+	gate = c.BFS_find(gate_name)
 	operation_str = combo2.get()
 
 	c.operate(operation_str, xval, gate)
@@ -185,7 +186,6 @@ def generate_circuit():
 		canvas.draw()
 		canvas.get_tk_widget().grid()
 
-		gates_dict = dict()
 		for name in c.adjList:
 			if(name != c.root.name):
 				gates.append(name)

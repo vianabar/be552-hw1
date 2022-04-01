@@ -48,7 +48,7 @@ class Circuit:
         return G
 
 
-    def BFS(self): # input s is output_gate
+    def BFS(self): 
         circuit_str = ""
         
         s = self.root
@@ -84,12 +84,31 @@ class Circuit:
         output_gate.calculate_truth_table()
         output_gate.calculate_score()
 
-    def post_order_find(self, gate_name, output_gate):
-        if output_gate.name == gate_name:
-            return output_gate
+    def BFS_find(self, gate_name): # input s is output_gate
+        
+        s = self.root
+        
+        for vertex in self.adjList:
+            self.visited[vertex] = False
 
-        for input_gate in output_gate.inputs:
-            return self.post_order_find(input_gate)
+        queue = []
+
+        queue.append(s)
+        self.visited[s.name] = True
+
+        while queue:
+
+            s = queue.pop(0)
+
+            if s.name == gate_name:
+                return s
+
+            for i in self.adjList[s.name]:
+                if self.visited[i.name] == False:
+                    queue.append(i)
+                    self.visited[i.name] == True
+        
+        return
 
 
 

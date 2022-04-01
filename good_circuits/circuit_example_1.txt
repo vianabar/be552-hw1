@@ -19,5 +19,6 @@ c.addEdge(gate_c,gate_d)
 c.addEdge(gate_e,gate_d)
 c.addEdge(gate_d,gate_f)
 
-
-
+c.operate('stretch', 1.4, gate_d)
+c.operate('increase_slope', 1.04, gate_a)
+c.operate('decrease_slope', 0.95, gate_e)

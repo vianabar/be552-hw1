@@ -30,8 +30,16 @@ class Gate:
                 "Gate Type: " + str(self.gate_type) +'\n\n'
 
     def get_stats(self): 
+        if self.gate_type == 'Output':
+            return "Name: " + str(self.name) + '\n' + \
+                "Gate Type: " + str(self.gate_type) + '\n' + \
+                "Inputs: " + ', '.join(input.name for input in self.inputs) + '\n' + \
+                "ON Min: " + str(self.on_min) + '\n' + \
+                "OFF Max: " + str(self.off_max) + '\n' + \
+                "Output Score: " + str(self.score) + '\n\n' 
 
-        return "Name: " + str(self.name) + '\n' + \
+        else:
+            return "Name: " + str(self.name) + '\n' + \
                 "Ymax: " + str(self.ymax) + '\n' + \
                 "Ymin: " + str(self.ymin) + '\n' + \
                 "n: " + str(self.n) + '\n' + \
@@ -189,6 +197,7 @@ class Gate:
         if self.gate_type == 'Output':
             self.on_min = self.inputs[0].on_min
             self.off_max = self.inputs[0].off_max
+            self.score = math.log(self.on_min/self.off_max)
         
         elif len(self.inputs) == 0:
             self.off_max = self.ymin

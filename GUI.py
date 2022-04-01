@@ -69,20 +69,13 @@ canvas.create_window((0, 0), window=scrollable_frame, anchor=W)
 canvas.configure(yscrollcommand=scrollbar.set)
 
 plot_frame = LabelFrame(root, width = 680 , height = 500, text="Circuit Visualization", pady=5)
-plot_frame.grid(row=0, column=3, columnspan=4)
+plot_frame.grid(row=0, column=3, columnspan=3)
 plot_frame.grid_propagate(0)
 
-p_frame = LabelFrame(root, width = 200 , height = 200, text="Promoters:")
-p_frame.grid(row=1, column=0, rowspan=4)
-p_frame.grid_propagate(0)
+op_frame = LabelFrame(root, width = 700 , height = 200, text="Operations Results:")
+op_frame.grid(row=1, column=0, rowspan=4, columnspan = 3)
+op_frame.grid_propagate(0)
 
-g_frame = LabelFrame(root, width = 200 , height = 200, text="UCF Gates:")
-g_frame.grid(row=1, column=1, rowspan=4)
-g_frame.grid_propagate(0)
-
-o_frame = LabelFrame(root, width = 200 , height = 200, text="Output Gates:")
-o_frame.grid(row=1, column=2, rowspan=4)
-o_frame.grid_propagate(0)
 
 
 # Function for gates combobox
@@ -102,7 +95,7 @@ def selected_op(event):
 
 # Function for operations to optimize circuit
 
-def get_xval():
+def perform_op():
 	xval = float(xval_entry.get())
 	gate_name = combo1.get()
 	gate = c.BFS_find(gate_name)
@@ -112,8 +105,12 @@ def get_xval():
 
 	for widget in scrollable_frame.winfo_children():
 		widget.destroy()
-		
+
 	generate_circuit()
+
+	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ","+ gate_name+ ")").grid()
+
+
 
 # Function for upload button for user to upload txt file with commands
 def upload():
@@ -251,7 +248,7 @@ combo1 = ttk.Combobox(root, value=gates)
 combo1.set("Select gate to modify")
 combo1.bind("<<ComboboxSelected>>", selected_g)
 combo1['state'] = 'readonly'
-combo1.grid(row=1, column=3)
+combo1.grid(row=1, column=4)
 
 # combo2 = ttk.Combobox(root, value=UCF_gates)
 # combo2.set("Select UCF gate(s)")
@@ -269,32 +266,28 @@ combo2 = ttk.Combobox(root, value=operations)
 combo2.set("Select operation to perform")
 combo2.bind("<<ComboboxSelected>>", selected_op)
 combo2['state'] = 'readonly'
-combo2.grid(row=1, column=5, columnspan=1)
+combo2.grid(row=2, column=4, columnspan=1)
 
 xval = StringVar()
 xval.set("Enter x value for operation: ")
 xval_entry = Entry(root,bd =5, textvariable = xval, width=20)
-xval_entry.grid(row=2, column=5)
-button_xval = Button(root, text = "Ok", command=get_xval, width=1)
-button_xval.grid(row=2, column=6, sticky=W)
-root.grid_columnconfigure(4, weight=1)
-root.grid_columnconfigure(3, weight=1)
+xval_entry.grid(row=3, column=4)
+button_op = Button(root, text = "Perform Operation", command=perform_op, width=15)
+button_op.grid(row=4, column=4)
+# root.grid_columnconfigure(5, weight=1)
 root.grid_rowconfigure(0, weight=1)
 root.grid_rowconfigure(4, weight=1)
 
 button_upload = Button(root, text = "Upload file", command=upload)
-button_upload.grid(row=4, column=3)
+button_upload.grid(row=1, column=3)
 
 button_circuit = Button(root, text="Design circuit", command=generate_circuit, bg='yellow')
-button_circuit.grid(row=1, column=4)
-
-button_optimize = Button(root, text="Optimize circuit", command=optimize_circuit)
-button_optimize.grid(row=2, column=4)
+button_circuit.grid(row=3, column=3)
 
 button_reset = Button(root, text="Start over", command=reset)
-button_reset.grid(row=4, column=4)
+button_reset.grid(row=1, column=5)
 
 button_quit = Button(root, text="Exit", command=root.quit, bg='red')
-button_quit.grid(row=4, column=5)
+button_quit.grid(row=3, column=5)
 
 root.mainloop()

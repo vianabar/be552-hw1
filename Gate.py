@@ -56,22 +56,22 @@ class Gate:
             truth_table_str = "No Truth Table"
         elif len(self.inputs) == 1:
             truth_table_str = "| " + str(self.inputs[0].name) + str(" " * (12 - len(self.inputs[0].name))) + " | " + str(self.name) + str(" " * (12 - len(self.name))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " |" + "\n" + \
                               "| " + str(round_sig(self.inputs[0].off_max)) + str(" " * (12 - len(str(round_sig(self.inputs[0].off_max))))) + " | " +  str(round_sig(self.truth_table[0])) + str(" " * (12 - len(str(round_sig(self.truth_table[0]))))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " |" + "\n" + \
                               "| " + str(round_sig(self.inputs[0].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[0].on_min))))) + " | " +  str(round_sig(self.truth_table[1])) + str(" " * (12 - len(str(round_sig(self.truth_table[1]))))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n"
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " |" + "\n"
         elif len(self.inputs) == 2:
             truth_table_str = "| " + str(self.inputs[0].name) + str(" " * (12 - len(self.inputs[0].name))) + " | " + str(self.inputs[1].name) + str(" " * (12 - len(self.inputs[1].name))) + " | " + str(self.name) + str(" " * (12 - len(self.name))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " | " + str(" " * 12) + " |" + "\n" + \
                               "| " + str(round_sig(self.inputs[0].off_max)) + str(" " * (12 - len(str(round_sig(self.inputs[0].off_max))))) + " | " +  str(round_sig(self.inputs[1].off_max)) + str(" " * (12 - len(str(round_sig(self.inputs[1].off_max))))) + " | " +  str(round_sig(self.truth_table[0])) + str(" " * (12 - len(str(round_sig(self.truth_table[0]))))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " | " + str(" " * 12) + " |" + "\n" + \
                               "| " + str(round_sig(self.inputs[0].off_max)) + str(" " * (12 - len(str(round_sig(self.inputs[0].off_max))))) + " | " +  str(round_sig(self.inputs[1].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[1].on_min))))) + " | " +  str(round_sig(self.truth_table[1])) + str(" " * (12 - len(str(round_sig(self.truth_table[1]))))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " | " + str(" " * 12) + " |" + "\n" + \
                               "| " + str(round_sig(self.inputs[0].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[0].on_min))))) + " | " +  str(round_sig(self.inputs[1].off_max)) + str(" " * (12 - len(str(round_sig(self.inputs[1].off_max))))) + " | " +  str(round_sig(self.truth_table[2])) + str(" " * (12 - len(str(round_sig(self.truth_table[2]))))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |" + "\n" + \
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " | " + str(" " * 12) + " |" + "\n" + \
                               "| " + str(round_sig(self.inputs[0].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[0].on_min))))) + " | " +  str(round_sig(self.inputs[1].on_min)) + str(" " * (12 - len(str(round_sig(self.inputs[1].on_min))))) + " | " +  str(round_sig(self.truth_table[3])) + str(" " * (12 - len(str(round_sig(self.truth_table[3]))))) + " |" + "\n" + \
-                              "| " + str("-" * 12) + " | " + str("-" * 12) + " | " + str("-" * 12) + " |"
+                              "| " + str(" " * 12) + " | " + str(" " * 12) + " | " + str(" " * 12) + " |"
                 
         return truth_table_str
     

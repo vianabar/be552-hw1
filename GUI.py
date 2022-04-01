@@ -108,7 +108,7 @@ def perform_op():
 
 	generate_circuit()
 
-	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ","+ gate_name+ ")").grid()
+	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ", "+ gate_name+ ")").grid()
 
 
 

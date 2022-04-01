@@ -1,3 +1,4 @@
+import argparse
 import os
 import reading_functions as read
 import copy
@@ -12,19 +13,27 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
 NavigationToolbar2Tk)
 import networkx as nx
 
-chassis_name = 'Eco1C1G1T1'
-input_dir = os.getcwd() + '/input/' 
+
+# Parse for chassis and input file path arguments
+parser = argparse.ArgumentParser(description='Create genetic circuit from input files')
+parser.add_argument('-l','--library_path',help='path for chassis libraries dir')
+parser.add_argument('-c','--chassis_name',help='chassis name')
+#parser.add_argument('-o','--output',help='path for the left and right output CSVs for vertext-wise cortical thickness from freesurfer output')
+
+args = parser.parse_args()
+
+chassis_name = args.chassis_name
+library_path = args.library_path
 
 # Get input signals from *.input.json file
-input_signals = read.read_input_json(input_dir + chassis_name + '.input.json')[0]
+input_signals = read.read_input_json(library_path + '/' + chassis_name + '.input.json')[0]
 
-       
 # Get output signals from *.output.json file
-output_signals = read.read_output_json(input_dir + chassis_name + '.output.json')[0]
+output_signals = read.read_output_json(library_path + '/' + chassis_name + '.output.json')[0]
 
     
 # Get assignment from *.UCF.json file
-ucf_signals = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')[0]
+ucf_signals = read.read_ucf_json(library_path + '/' + chassis_name + '.UCF.json')[0]
 
 
 # Creating main GUI window
@@ -168,7 +177,7 @@ def generate_circuit():
 
 		# Drawing the graph
 		pos=nx.circular_layout(G)
-		nx.draw_networkx(G,ax=a, arrows=True, font_size=6, font_color='k', edge_color='b', node_color = 'y', node_size=300)
+		nx.draw_networkx(G,ax=a, arrows=True, font_size=6, font_color='k', edge_color='y', node_color = 'b', node_size=300)
 		
 		# Placing the canvas on the frame
 		canvas = FigureCanvasTkAgg(f, plot_frame)
@@ -207,11 +216,11 @@ def reset():
 	# need to delete gate objects
 
 # Automatically retrieving list of promoter names, gate names and output names
-promoters = read.read_input_json(input_dir + chassis_name + '.input.json')[1]
+promoters = read.read_input_json(library_path + '/' + chassis_name + '.input.json')[1]
 
-UCF_gates = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')[1]
+UCF_gates = read.read_ucf_json(library_path + '/' + chassis_name + '.UCF.json')[1]
 
-output_gates = read.read_output_json(input_dir + chassis_name + '.output.json')[1]
+output_gates = read.read_output_json(library_path + '/' + chassis_name + '.output.json')[1]
 
 operations = (
 	"stretch",

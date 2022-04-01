@@ -84,6 +84,15 @@ class Circuit:
         output_gate.calculate_truth_table()
         output_gate.calculate_score()
 
+    def post_order_find(self, gate_name, output_gate):
+        if output_gate.name == gate_name:
+            return output_gate
+
+        for input_gate in output_gate.inputs:
+            return self.post_order_find(input_gate)
+
+
+
     
     def operate(self, operation, x, gate):
         if operation == "stretch":

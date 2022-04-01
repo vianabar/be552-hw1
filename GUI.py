@@ -85,30 +85,30 @@ o_frame.grid(row=1, column=2, rowspan=4)
 o_frame.grid_propagate(0)
 
 
-# Function for promoters combobox
-def selected_p(event):
-	# name = combo1.get()
-	# new_gate = copy.deepcopy(input_signals[name])
-	myLabel = Label(p_frame, text = combo1.get()).grid()
-
 # Function for gates combobox
 def selected_g(event):
-	myLabel = Label(g_frame, text = combo2.get()).grid()
+	gate = combo1.get()
+	return 
 
-# Function for output combobox
-def selected_o(event):
-	myLabel = Label(o_frame, text = combo3.get()).grid()
+	# myLabel = Label(p_frame, text = combo1.get()).grid()
 
-# Function for operations to optimize circuit
+# # Function for gates combobox
+# def selected_g(event):
+# 	myLabel = Label(g_frame, text = combo2.get()).grid()
+
+# # Function for output combobox
 def selected_op(event):
-	#if combo4.get() == "stretch" -> call stretch function
-	#if combo4.get() == "weaker RBS" -> call weaker RBS function
-	#and so on...
-	#do we make the user click design circuit again or do we automatically refresh the plot and stats?
 	return
 
+# Function for operations to optimize circuit
+
 def get_xval():
-	xval = xval_entry.get()
+	xval = float(xval_entry.get())
+	gate = combo1.get()
+	operation_str = combo2.get()
+
+	c.operate(operation_str, xval, gate)
+	generate_circuit()
 
 # Function for upload button for user to upload txt file with commands
 def upload():
@@ -133,6 +133,7 @@ def upload():
 	for line in lines:
 		if not line.isspace():
 			exec(line)
+
 
 	# mb.showinfo(
 	# 	title='Selected File',
@@ -184,6 +185,13 @@ def generate_circuit():
 		canvas.draw()
 		canvas.get_tk_widget().grid()
 
+		gates_dict = dict()
+		for name in c.adjList:
+			if(name != c.root.name):
+				gates.append(name)
+
+		combo1['values'] = gates
+
     
 # Automatically performs the operations that best optimize the circuit
 def optimize_circuit():
@@ -216,11 +224,13 @@ def reset():
 	# need to delete gate objects
 
 # Automatically retrieving list of promoter names, gate names and output names
-promoters = read.read_input_json(library_path + '/' + chassis_name + '.input.json')[1]
+# promoters = read.read_input_json(library_path + '/' + chassis_name + '.input.json')[1]
 
-UCF_gates = read.read_ucf_json(library_path + '/' + chassis_name + '.UCF.json')[1]
+# UCF_gates = read.read_ucf_json(library_path + '/' + chassis_name + '.UCF.json')[1]
 
-output_gates = read.read_output_json(library_path + '/' + chassis_name + '.output.json')[1]
+# output_gates = read.read_output_json(library_path + '/' + chassis_name + '.output.json')[1]
+
+gates=[]
 
 operations = (
 	"stretch",
@@ -233,33 +243,34 @@ operations = (
 	)
 
 # Creating comboboxes for different selections user can make in designing circuit
-combo1 = ttk.Combobox(root, value=promoters)
-combo1.set("Select Promoter(s)")
-combo1.bind("<<ComboboxSelected>>", selected_p)
+combo1 = ttk.Combobox(root, value=gates)
+combo1.set("Select gate to modify")
+combo1.bind("<<ComboboxSelected>>", selected_g)
 combo1['state'] = 'readonly'
 combo1.grid(row=1, column=3)
 
-combo2 = ttk.Combobox(root, value=UCF_gates)
-combo2.set("Select UCF gate(s)")
-combo2.bind("<<ComboboxSelected>>", selected_g)
+# combo2 = ttk.Combobox(root, value=UCF_gates)
+# combo2.set("Select UCF gate(s)")
+# combo2.bind("<<ComboboxSelected>>", selected_g)
+# combo2['state'] = 'readonly'
+# combo2.grid(row=2, column=3)
+
+# combo3 = ttk.Combobox(root, value=output_gates)
+# combo3.set("Select output gate(s)")
+# combo3.bind("<<ComboboxSelected>>", selected_o)
+# combo3['state'] = 'readonly'
+# combo3.grid(row=3, column=3)
+
+combo2 = ttk.Combobox(root, value=operations)
+combo2.set("Select operation to perform")
+combo2.bind("<<ComboboxSelected>>", selected_op)
 combo2['state'] = 'readonly'
-combo2.grid(row=2, column=3)
-
-combo3 = ttk.Combobox(root, value=output_gates)
-combo3.set("Select output gate(s)")
-combo3.bind("<<ComboboxSelected>>", selected_o)
-combo3['state'] = 'readonly'
-combo3.grid(row=3, column=3)
-
-combo4 = ttk.Combobox(root, value=operations)
-combo4.set("Select operation to perform")
-combo4.bind("<<ComboboxSelected>>", selected_op)
-combo4['state'] = 'readonly'
-combo4.grid(row=1, column=5, columnspan=1)
+combo2.grid(row=1, column=5, columnspan=1)
 
 xval = StringVar()
 xval.set("Enter x value for operation: ")
-xval_entry = Entry(root,bd =5, textvariable = xval, width=20).grid(row=2, column=5)
+xval_entry = Entry(root,bd =5, textvariable = xval, width=20)
+xval_entry.grid(row=2, column=5)
 button_xval = Button(root, text = "Ok", command=get_xval, width=1)
 button_xval.grid(row=2, column=6, sticky=W)
 root.grid_columnconfigure(4, weight=1)

@@ -86,11 +86,17 @@ class Gate:
         self.ymax = self.ymax * x
         self.ymin = self.ymin / x
 
+        self.calculate_truth_table()
+        self.calculate_score()
+
     def increase_slope(self, x):
         if (x > 1.05):
             raise ValueError("x can be at-most 1.05")
 
         self.n = self.n * x
+
+        self.calculate_truth_table()
+        self.calculate_score()
 
     def decrease_slope(self, x):
         if (x > 1.05):
@@ -102,15 +108,27 @@ class Gate:
         self.ymax = self.ymax * x
         self.ymin = self.ymin * x
 
+        self.calculate_truth_table()
+        self.calculate_score()
+
     def weaker_prom(self, x):
         self.ymax = self.ymax / x
         self.ymin = self.ymin / x
 
+        self.calculate_truth_table()
+        self.calculate_score()
+
     def stronger_RBS(self, x):
         self.k = self.k / x
 
+        self.calculate_truth_table()
+        self.calculate_score()
+
     def weaker_RBS(self, x):
         self.k = self.k * x
+
+        self.calculate_truth_table()
+        self.calculate_score()
     
     def assign_input(self, gate=None):
         if (len(self.inputs) >= 2):
@@ -139,12 +157,12 @@ class Gate:
     def calculate_truth_table(self):
         
         # Zero inputs
-        if len(self.inputs) == 0:
+        if len(self.inputs) == 0 or self.gate_type == 'Output':
             self.truth_table = None
             self.truth_table_bool = None
             
         # One input
-        if len(self.inputs) == 1:
+        elif len(self.inputs) == 1:
             self.truth_table = [self.calculate_y(self.inputs[0].off_max, 0),
                                 self.calculate_y(self.inputs[0].on_min, 0)]
             
@@ -160,7 +178,7 @@ class Gate:
 
         
         # Two inputs
-        if len(self.inputs) == 2:
+        elif len(self.inputs) == 2:
             self.truth_table = [self.calculate_y(self.inputs[0].off_max, 
                                                  self.inputs[1].off_max),
                                 self.calculate_y(self.inputs[0].off_max,
@@ -200,11 +218,14 @@ class Gate:
             self.off_max = self.inputs[0].off_max
             self.score = math.log(self.on_min/self.off_max)
         
+        # Input
         elif len(self.inputs) == 0:
             self.off_max = self.ymin
             self.on_min = self.ymax
             self.score = math.log(self.on_min/self.off_max)
         
+
+        # UCF Gate with Inputs Connected
         elif len(self.inputs) > 0:
             off_vals = []
             on_vals = []

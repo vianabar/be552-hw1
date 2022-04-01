@@ -7,7 +7,6 @@ import Gate
 
 
 # Adapted from: https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
-
 class Circuit:
     def	__init__(self):
         self.adjList = defaultdict(list) #adjacency list
@@ -70,9 +69,34 @@ class Circuit:
         '''
         self.visualize()
         '''
-    
-    
 
+    def post_order_score(self, output_gate):
+        for input_gate in output_gate.inputs:
+            self.post_order_score(input_gate)
+        output_gate.calculate_truth_table()
+        output_gate.calculate_score()
+
+    
+    def operate(self, operation, x, gate):
+        if operation == "stretch":
+            gate.stretch(x)
+        elif operation == "increase_slope":
+            gate.increase_slope(x)
+        elif operation == "decrease_slope":
+            gate.decrease_slope(x)
+        elif operation == "stronger_prom":
+            gate.stronger_prom(x)
+        elif operation == "weaker_prom":
+            gate.weaker_prom(x)
+        elif operation == "stronger_RBS":
+            gate.stronger_RBS(x)
+        elif operation == "weaker_RBS":
+            gate.weaker_RBS(x)
+
+        self.post_order_score(self.root)
+        self.BFS()
+
+        
 
 
 

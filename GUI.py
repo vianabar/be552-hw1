@@ -109,6 +109,10 @@ def get_xval():
 	operation_str = combo2.get()
 
 	c.operate(operation_str, xval, gate)
+
+	for widget in scrollable_frame.winfo_children():
+		widget.destroy()
+		
 	generate_circuit()
 
 # Function for upload button for user to upload txt file with commands

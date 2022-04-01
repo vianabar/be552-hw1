@@ -18,4 +18,3 @@ c.addEdge(gate_b,gate_d)
 c.addEdge(gate_d,gate_e)
 
 c.operate('stretch', 1.6, gate_d)
-gate_d.get_stats()

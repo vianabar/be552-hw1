@@ -168,7 +168,7 @@ def generate_circuit():
 
 		# Drawing the graph
 		pos=nx.circular_layout(G)
-		nx.draw_networkx(G,ax=a, arrows=True, font_size=6, node_size=300)
+		nx.draw_networkx(G,ax=a, arrows=True, font_size=6, font_color='k', edge_color='b', node_color = 'y', node_size=300)
 		
 		# Placing the canvas on the frame
 		canvas = FigureCanvasTkAgg(f, plot_frame)

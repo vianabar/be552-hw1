@@ -26,8 +26,8 @@ class Gate:
 
     def __str__(self):
         
-        return "Name: " + str(self.name) + '\n' + \
-                "Gate Type: " + str(self.gate_type) +'\n\n'
+        return str(self.name) + '\n' + \
+               str(self.gate_type) +'\n\n'
 
 
     def get_stats(self): 

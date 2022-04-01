@@ -142,7 +142,7 @@ def generate_circuit():
 			message="No gates assigned yet!"
 		)
 
-	if c == None:
+	if c.V == 0:
 		print("Error! No gates assigned yet!")
 		mb.showinfo(
 			title='Error!',
@@ -202,7 +202,7 @@ def reset():
 	for widget in plot_frame.winfo_children():
 		widget.destroy()
 
-	c = None # does not seem to work
+	c.clear() # does not seem to work
 
 	# need to delete gate objects
 

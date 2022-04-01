@@ -14,6 +14,14 @@ class Circuit:
         self.visited = dict()
         self.visual = []
         self.root = None
+    
+    def clear(self):
+        self.adjList = defaultdict(list) #adjacency list
+        self.V = 0 #num of vertices
+        self.visited = dict()
+        self.visual = []
+        self.root = None
+    
 
     def addVertex(self, gate):
         self.V = self.V + 1

@@ -35,15 +35,14 @@ frame = LabelFrame(root, width = 1200, height = 500, text="Main Frame", pady=5)
 frame.grid(row=0, column=0, columnspan=5, padx=20)
 frame.grid_propagate(0)
 
-
 container = ttk.Frame(root, width = 1200, height = 500)
-canvas = Canvas(container, height = 450)
+canvas = Canvas(container, height = 450, width=400)
 scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
 scrollable_frame = ttk.Frame(canvas, width = 1200, height = 500)
 
 container.grid(row=0, column=0, columnspan=5, padx=20)
-canvas.grid(row=0, column=0, columnspan=5, padx=400, sticky=E)
-scrollbar.grid(row=0, column = 5, rowspan = 5, sticky=E)
+canvas.grid(row=0, column=0, columnspan=5, padx=350, sticky=W)
+scrollbar.grid(row=0, column = 5, columnspan=5, sticky=E)
 
 
 scrollable_frame.bind(
@@ -122,7 +121,7 @@ def generate_circuit():
 
 	stats = c.BFS()
 
-	myLabel = Label(scrollable_frame, text = stats, anchor=E, justify=LEFT).grid()
+	myLabel = Label(scrollable_frame, text = stats, anchor=E, justify=LEFT, font = "monaco").grid()
 	#call function that will create graph and visualize it -> display on frame
 
 def optimize_circuit():

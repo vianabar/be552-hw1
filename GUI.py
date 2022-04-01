@@ -35,6 +35,7 @@ frame = LabelFrame(root, width = 1200, height = 500, text="Main Frame", pady=5)
 frame.grid(row=0, column=0, columnspan=5, padx=20)
 frame.grid_propagate(0)
 
+<<<<<<< HEAD
 container = ttk.Frame(root, width = 1200, height = 500)
 canvas = Canvas(container, height = 450)
 scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
@@ -44,6 +45,18 @@ container.grid(row=0, column=0, columnspan=5, padx=20)
 canvas.grid(row=0, column=0, columnspan=5, padx=400, sticky=E)
 scrollbar.grid(row=0, column = 5, rowspan = 5, sticky=E)
 
+=======
+
+container = ttk.Frame(root, width = 1200, height = 500)
+canvas = Canvas(container, height = 450)
+scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+scrollable_frame = ttk.Frame(canvas)
+
+container.grid(row=0, column=0, columnspan=5, padx=20)
+canvas.grid(row=0, column=0, columnspan=5, padx=400, sticky=E)
+scrollbar.grid(row=0, column = 5, rowspan = 5, sticky=E)
+
+>>>>>>> 60e19fe62e5796a98bec92ee1aaf899a604fb36b
 
 scrollable_frame.bind(
     "<Configure>",
@@ -52,7 +65,11 @@ scrollable_frame.bind(
     )
 )
 
+<<<<<<< HEAD
 canvas.create_window((0, 0), window=scrollable_frame, anchor=W)
+=======
+canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+>>>>>>> 60e19fe62e5796a98bec92ee1aaf899a604fb36b
 canvas.configure(yscrollcommand=scrollbar.set)
 
 
@@ -119,7 +136,11 @@ def generate_circuit():
 	button_circuit['state'] = 'disabled'
 
 	stats = c.BFS()
+<<<<<<< HEAD
 	myLabel = Label(scrollable_frame, text = stats, anchor=E, justify=LEFT).grid()
+=======
+	myLabel = Label(scrollable_frame, text = stats ).grid()
+>>>>>>> 60e19fe62e5796a98bec92ee1aaf899a604fb36b
 
 	#call function that will create graph and visualize it -> display on frame
 
@@ -141,7 +162,11 @@ def reset():
 	for widget in o_frame.winfo_children():
 		widget.destroy()
 
+<<<<<<< HEAD
 	for widget in scrollable_frame.winfo_children():
+=======
+	for widget in frame.winfo_children():
+>>>>>>> 60e19fe62e5796a98bec92ee1aaf899a604fb36b
 		widget.destroy()
 
 

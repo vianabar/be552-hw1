@@ -7,6 +7,12 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
+from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
+NavigationToolbar2Tk)
+import networkx as nx
+
 # from PIL import ImageTK, Image
 # pip install Pillow
 
@@ -28,21 +34,21 @@ ucf_signals = read.read_ucf_json(input_dir + chassis_name + '.UCF.json')[0]
 root = Tk()
 root.title("Genetic Circuit Design Automation")
 # root.iconbitmap('filepath/iconname.ico')
-root.geometry("1280x720")
+root.geometry("1920x720")
 
 # Creating frames
-frame = LabelFrame(root, width = 1200, height = 500, text="Main Frame", pady=5)
-frame.grid(row=0, column=0, columnspan=5, padx=20)
+frame = LabelFrame(root, width = 950, height = 500, text="Main Frame", pady=5)
+frame.grid(row=0, column=0, columnspan=4, padx=20)
 frame.grid_propagate(0)
 
-container = ttk.Frame(root, width = 1200, height = 500)
-canvas = Canvas(container, height = 450, width=400)
+container = LabelFrame(root, width = 1000, height = 450)
+canvas = Canvas(container, width=900, height = 450,)
 scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
-scrollable_frame = ttk.Frame(canvas, width = 1200, height = 500)
+scrollable_frame = ttk.Frame(canvas, width = 900, height = 450)
 
-container.grid(row=0, column=0, columnspan=5, padx=20)
-canvas.grid(row=0, column=0, columnspan=5, padx=350, sticky=W)
-scrollbar.grid(row=0, column = 5, columnspan=5, sticky=E)
+container.grid(row=0, column=0, columnspan=4, sticky=W, padx=20)
+canvas.grid(row=0, column=0, columnspan=4, sticky=W, padx=20)
+scrollbar.grid(row=0, column = 3, columnspan=4,sticky=E)
 
 
 scrollable_frame.bind(
@@ -56,6 +62,9 @@ scrollable_frame.bind(
 canvas.create_window((0, 0), window=scrollable_frame, anchor=W)
 canvas.configure(yscrollcommand=scrollbar.set)
 
+plot_frame = LabelFrame(root, width = 400 , height = 500, text="Circuit")
+plot_frame.grid(row=0, column=4, columnspan=3)
+plot_frame.grid_propagate(0)
 
 p_frame = LabelFrame(root, width = 200 , height = 200, text="Promoters:")
 p_frame.grid(row=1, column=0, rowspan=4)
@@ -119,10 +128,36 @@ def generate_circuit():
 	
 	button_circuit['state'] = 'disabled'
 
-	stats = c.BFS()
+	# stats = c.BFS()
 
-	myLabel = Label(scrollable_frame, text = stats, anchor=E, justify=LEFT, font = "monaco").grid()
+	# myLabel = Label(scrollable_frame, text = stats, anchor=E, justify=LEFT, font = "monaco").grid()
 	#call function that will create graph and visualize it -> display on frame
+	# fig =Figure(figsize = (5, 5), dpi=100)
+	# a = fig.add_subplot(111)
+	G = c.visualize()
+	
+	f = plt.figure(figsize=(6,4))
+	a = f.add_subplot(111)
+	ax = plt.gca()
+	ax.margins(0.20)
+	ax.patch.set_alpha(0.0)
+	plt.axis('off')
+	plt.box(False)
+
+	# the networkx part
+	pos=nx.circular_layout(G)
+	nx.draw_networkx(G,pos=pos,ax=a)
+	# 
+	# a.plt.show()
+	
+	# placing the canvas on the frame
+	canvas = FigureCanvasTkAgg(f, scrollable_frame)
+	canvas.draw()
+	canvas.get_tk_widget().grid()
+
+    
+   
+	
 
 def optimize_circuit():
 	#connect with optimization function and produce message window comparing

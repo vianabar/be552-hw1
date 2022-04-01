@@ -35,15 +35,14 @@ frame = LabelFrame(root, width = 1200, height = 500, text="Main Frame", pady=5)
 frame.grid(row=0, column=0, columnspan=5, padx=20)
 frame.grid_propagate(0)
 
-
 container = ttk.Frame(root, width = 1200, height = 500)
-canvas = Canvas(container)
+canvas = Canvas(container, height = 450)
 scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
-scrollable_frame = ttk.Frame(canvas)
+scrollable_frame = ttk.Frame(canvas, width = 1200, height = 500)
 
 container.grid(row=0, column=0, columnspan=5, padx=20)
-canvas.grid(padx=400, sticky=W)
-scrollbar.grid(padx=400, sticky=E)
+canvas.grid(row=0, column=0, columnspan=5, padx=400, sticky=E)
+scrollbar.grid(row=0, column = 5, rowspan = 5, sticky=E)
 
 
 scrollable_frame.bind(
@@ -53,7 +52,7 @@ scrollable_frame.bind(
     )
 )
 
-canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+canvas.create_window((0, 0), window=scrollable_frame, anchor=W)
 canvas.configure(yscrollcommand=scrollbar.set)
 
 
@@ -120,7 +119,7 @@ def generate_circuit():
 	button_circuit['state'] = 'disabled'
 
 	stats = c.BFS()
-	myLabel = Label(scrollable_frame, text = stats ).grid()
+	myLabel = Label(scrollable_frame, text = stats, anchor=E, justify=LEFT).grid()
 
 	#call function that will create graph and visualize it -> display on frame
 
@@ -142,7 +141,7 @@ def reset():
 	for widget in o_frame.winfo_children():
 		widget.destroy()
 
-	for widget in frame.winfo_children():
+	for widget in scrollable_frame.winfo_children():
 		widget.destroy()
 
 

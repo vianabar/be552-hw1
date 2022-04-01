@@ -37,13 +37,13 @@ frame.grid_propagate(0)
 
 
 container = ttk.Frame(root, width = 1200, height = 500)
-canvas = Canvas(container)
+canvas = Canvas(container, height = 450)
 scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
 scrollable_frame = ttk.Frame(canvas)
 
 container.grid(row=0, column=0, columnspan=5, padx=20)
-canvas.grid(padx=400, sticky=W)
-scrollbar.grid(padx=400, sticky=E)
+canvas.grid(row=0, column=0, columnspan=5, padx=400, sticky=E)
+scrollbar.grid(row=0, column = 5, rowspan = 5, sticky=E)
 
 
 scrollable_frame.bind(

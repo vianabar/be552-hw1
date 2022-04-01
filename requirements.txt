@@ -1,4 +1,6 @@
 argparse
+math
 matplotlib
 networkx
-tkinter
+os
+tk

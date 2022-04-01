@@ -29,6 +29,7 @@ class Gate:
         return "Name: " + str(self.name) + '\n' + \
                 "Gate Type: " + str(self.gate_type) +'\n\n'
 
+
     def get_stats(self): 
         if self.gate_type == 'Output':
             return "Name: " + str(self.name) + '\n' + \
@@ -105,7 +106,7 @@ class Gate:
         self.ymax = self.ymax / x
         self.ymin = self.ymin / x
 
-    def strong_RBS(self, x):
+    def stronger_RBS(self, x):
         self.k = self.k / x
 
     def weaker_RBS(self, x):

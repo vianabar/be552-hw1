@@ -36,10 +36,10 @@ class Circuit:
         self.visual.append(temp); 
 
     def visualize(self):
-        G = nx.Graph()
+        G = nx.DiGraph()
         G.add_edges_from(self.visual)
-        nx.draw_networkx(G)
-        plt.show()
+        return G
+
 
     def BFS(self): # input s is output_gate
         circuit_str = ""

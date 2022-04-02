@@ -4,7 +4,7 @@
 
 	Input signals can only be used as inputs to UCF gates, while UCF gates can take in up to two input signals or gates. UCF gates are currently supported as AND, OR, NOT, NOR gates. The truth table of each UCF gate is calculated based on the input values as well as the ymin, ymax, alpha, and beta values of the UCF gate itself. One output signal must be connected to a singular UCF gate, in which the output signal’s score represents the score of the overall circuit. The higher the score, the closer the circuit’s behavior resembles a boolean function.
 
-    Operations are simulations of DNA (stronger/weaker promoter, stronger/weaker ribosome binding site) and protein engineering (stretch, increase/decrease slope) techniques. Operations can either be done in the genetic circuit file or directly in the program GUI.scor
+    Operations are simulations of DNA (stronger/weaker promoter, stronger/weaker ribosome binding site) and protein engineering (stretch, increase/decrease slope) techniques. Operations can either be done in the genetic circuit file or directly in the program GUI.
 	
 	
 2. Installation:

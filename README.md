@@ -13,7 +13,7 @@
     conda activate newenv
     pip install -r requirements.txt  
         
-	https://github.com/vianabar/be552-hw1.git
+	git clone https://github.com/vianabar/be552-hw1.git
 
 3. How to use:
 

@@ -1,0 +1,24 @@
+gate_a = copy.deepcopy(input_signals['pTet'])
+gate_b = copy.deepcopy(input_signals['pTac'])
+gate_c = copy.deepcopy(input_signals['pLuxStar'])
+
+gate_d = copy.deepcopy(ucf_signals['N1_LmrA'])
+gate_e = copy.deepcopy(ucf_signals['S3_SrpR'])
+gate_f = copy.deepcopy(ucf_signals['Q1_QacR'])
+
+gate_g = copy.deepcopy(output_signals['YFP'])
+
+c.addVertex(gate_a)
+c.addVertex(gate_b)
+c.addVertex(gate_c)
+c.addVertex(gate_d)
+c.addVertex(gate_e)
+c.addVertex(gate_f)
+c.addVertex(gate_g)
+
+c.addEdge(gate_a,gate_d)
+c.addEdge(gate_b,gate_d)
+c.addEdge(gate_c,gate_e)
+c.addEdge(gate_d,gate_f)
+c.addEdge(gate_e,gate_f)
+c.addEdge(gate_f,gate_g)

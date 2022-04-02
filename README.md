@@ -58,33 +58,33 @@
 
         **Operation strings are ‘stretch’ (x <= 1.5), ‘increase_slope’ (x <= 1.05), ‘decrease_slope(x <= 1.05), ‘stronger_prom’, ‘weaker_prom’, ‘stronger RBS’, ‘weaker_RBS’
 
-3.3. Running the program:
-	
-    Start the program with the following command:
+    3.3. Running the program:
+        
+        Start the program with the following command:
 
-        python GUI.py -l <path to directory containing input, UCF, and output JSON files> -c <chassis name>
+            python GUI.py -l <path to directory containing input, UCF, and output JSON files> -c <chassis name>
 
-    To create a new genetic circuit, press the “Upload file” button and search for the 
-    desired genetic circuit file which contains all of the commands to executed.
+        To create a new genetic circuit, press the “Upload file” button and search for the 
+        desired genetic circuit file which contains all of the commands to executed.
 
-    To generate the genetic circuit file:
+        To generate the genetic circuit file:
 
-    Press the “Design circuit” button which creates a graph containing all of the gates as nodes and the assigned connections as edges. BFS is then performed on the graph to produce details about each gate (name, gate type, ON Min, OFF Max, n, k) and their corresponding truth table. 
+        Press the “Design circuit” button which creates a graph containing all of the gates as nodes and the assigned connections as edges. BFS is then performed on the graph to produce details about each gate (name, gate type, ON Min, OFF Max, n, k) and their corresponding truth table. 
 
-    These statistics will be displayed on the “Main Frame” of the GUI for the user to view. The graph is also drawn with the help of networkx library and displayed on the “Circuit Visualization” frame.
+        These statistics will be displayed on the “Main Frame” of the GUI for the user to view. The graph is also drawn with the help of networkx library and displayed on the “Circuit Visualization” frame.
 
-    To perform operations on the gates:
+        To perform operations on the gates:
 
-    Choose the gate that you want to modify in the “Select gate to modify” combobox.
+        Choose the gate that you want to modify in the “Select gate to modify” combobox.
 
-    Choose the operation to perform in the “Select operation to perform” combobox.
+        Choose the operation to perform in the “Select operation to perform” combobox.
 
-    Enter the appropriate x value for the operation in the entry widget.
+        Enter the appropriate x value for the operation in the entry widget.
 
-    Press “Perform Operation”.
+        Press “Perform Operation”.
 
 
-3.4. Example files:
+    3.4. Example files:
 
-    Example working gene circuit files are in ".txt" form in the "good_circuits" directory
-    Example input, UCF, output library for chassis "Eco1C1G1T1" are in ".json" form in the "input" directory
+        Example working gene circuit files are in ".txt" form in the "good_circuits" directory
+        Example input, UCF, output library for chassis "Eco1C1G1T1" are in ".json" form in the "input" directory

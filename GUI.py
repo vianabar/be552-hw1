@@ -87,56 +87,13 @@ def selected_g(event):
 def selected_op(event):
 	return
 
-# Function for operation on gate
-def perform_op():
-	old_score = c.root.score
-
-	if(xval_entry.get().isnumeric() == False):
-		mb.showinfo(
-			title='Error!',
-			message="x is not a number!"
-		)
-
-
-	xval = float(xval_entry.get())
-	gate_name = combo1.get()
-	gate = c.BFS_find(gate_name)
-	operation_str = combo2.get()
-
-	c.operate(operation_str, xval, gate)
-
-	for widget in scrollable_frame.winfo_children():
-		widget.destroy()
-
-	generate_circuit()
-
-	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ", "+ gate_name+ "), Old Score = " + str(old_score) + ", New Score = " + str(c.root.score)).grid()
-
-
-# Function for upload button for user to upload txt file with commands
-def upload():
-	filetypes = (
-		('text files', '*.txt'),
-		('spreadsheet files', '*.xlsx')
-
-	)
-
-	filename = fd.askopenfilename(
-		title='Open a file',
-		initialdir=os.getcwd(),
-		filetypes=filetypes
-		)
-
-	with open(filename) as f:
-		lines = f.readlines()
-
-	global c
-	c = Circuit.Circuit()
-
-	for line in lines:
-		if not line.isspace():
-			exec(line)
-
+# Check if string is a float
+def isFloat(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
 
 # Generates genetic circuit stats and graph based on gates and connections that user created
 def generate_circuit():
@@ -184,25 +141,93 @@ def generate_circuit():
 		canvas.get_tk_widget().grid()
 
 		for name in c.adjList:
-			if(name != c.root.name):
+			if(name != c.root.name and name not in gates):
 				gates.append(name)
 
 		combo1['values'] = gates
 
-    
 
-# Clears all gates selected/created and erases graph + stats from window
+# Function for operation on gate
+def perform_op():
+	old_score = c.root.score
+
+	if(isFloat(xval_entry.get()) == False):
+		mb.showinfo(
+			title='Error!',
+			message="x is not a number!"
+		)
+		return
+
+
+	xval = float(xval_entry.get())
+	gate_name = combo1.get()
+	gate = c.BFS_find(gate_name)
+	operation_str = combo2.get()
+
+	if(operation_str not in operations):
+		mb.showinfo(
+			title='Error!',
+			message="No operation selected!"
+		)
+		return
+
+	if(gate == None):
+		mb.showinfo(
+			title='Error!',
+			message="No gate selected!"
+		)
+		return
+
+	c.operate(operation_str, xval, gate)
+
+	for widget in scrollable_frame.winfo_children():
+		widget.destroy()
+
+	for widget in plot_frame.winfo_children():
+		widget.destroy()
+
+	combo1['values'] = []
+	combo1.set("Select gate to modify")
+	combo2.set("Select operation to perform")
+	xval_entry.delete(0,END)
+
+	generate_circuit()
+
+	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ", "+ gate_name+ ") \
+	 Old Score = " + str(Circuit.Gate.round_sig(old_score)) + ", New Score = " + str(Circuit.Gate.round_sig(c.root.score)), justify=LEFT, anchor=E).grid()
+
+
+# Function for upload button for user to upload txt file with commands
+def upload():
+	filetypes = (
+		('text files', '*.txt'),
+		('spreadsheet files', '*.xlsx')
+
+	)
+
+	filename = fd.askopenfilename(
+		title='Open a file',
+		initialdir=os.getcwd(),
+		filetypes=filetypes
+		)
+
+	with open(filename) as f:
+		lines = f.readlines()
+
+	global c
+	c = Circuit.Circuit()
+
+	for line in lines:
+		if not line.isspace():
+			exec(line)
+
+
+# Clears all gates created for current circuit and erases graph + stats from window
 def reset():
 	if button_circuit['state'] == 'disabled':
 		button_circuit['state'] = 'normal'
 
-	for widget in p_frame.winfo_children():
-		widget.destroy()
-
-	for widget in g_frame.winfo_children():
-		widget.destroy()
-
-	for widget in o_frame.winfo_children():
+	for widget in op_frame.winfo_children():
 		widget.destroy()
 
 	for widget in scrollable_frame.winfo_children():
@@ -210,6 +235,12 @@ def reset():
 
 	for widget in plot_frame.winfo_children():
 		widget.destroy()
+
+	combo1['values'] = []
+	combo1.set("Select gate to modify")
+	combo2.set("Select operation to perform")
+	xval_entry.delete(0,END)
+
 
 	c.clear() # does not seem to work
 

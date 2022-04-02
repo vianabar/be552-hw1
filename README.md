@@ -9,9 +9,9 @@
 	
 2. Installation:
 
-    conda create -n newenv python
-    conda activate newenv
-    pip install -r requirements.txt  
+        conda create -n newenv python
+        conda activate newenv
+        pip install -r requirements.txt  
         
 	git clone https://github.com/vianabar/be552-hw1.git
 

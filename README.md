@@ -18,8 +18,8 @@
 
     3.1. Preparing libraries:
         Three parts library files must be created in the form for the program to work:
-            chassis_organism_name.input.json
-            chassis_organism_name.UCF.json
+            chassis_organism_name.input.json,
+            chassis_organism_name.UCF.json,
             chassis_organism_name.output.json
 
             Read https://www.nature.com/articles/s41596-021-00675-2, Supplementary Information: Section 6

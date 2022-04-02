@@ -1,6 +1,4 @@
 argparse
-math
 matplotlib
 networkx
-os
 tk

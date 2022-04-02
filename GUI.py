@@ -96,6 +96,7 @@ def selected_op(event):
 # Function for operations to optimize circuit
 
 def perform_op():
+	old_score = c.root.score
 	xval = float(xval_entry.get())
 	gate_name = combo1.get()
 	gate = c.BFS_find(gate_name)
@@ -108,7 +109,7 @@ def perform_op():
 
 	generate_circuit()
 
-	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ", "+ gate_name+ ")").grid()
+	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ", "+ gate_name+ "), Old Score = " + str(old_score) + ", New Score = " + str(c.root.score)).grid()
 
 
 

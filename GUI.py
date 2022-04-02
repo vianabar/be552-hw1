@@ -83,20 +83,21 @@ def selected_g(event):
 	gate = combo1.get()
 	return 
 
-	# myLabel = Label(p_frame, text = combo1.get()).grid()
-
-# # Function for gates combobox
-# def selected_g(event):
-# 	myLabel = Label(g_frame, text = combo2.get()).grid()
-
-# # Function for output combobox
+# Function for operations combobox
 def selected_op(event):
 	return
 
-# Function for operations to optimize circuit
-
+# Function for operation on gate
 def perform_op():
 	old_score = c.root.score
+
+	if(xval_entry.get().isnumeric() == False):
+		mb.showinfo(
+			title='Error!',
+			message="x is not a number!"
+		)
+
+
 	xval = float(xval_entry.get())
 	gate_name = combo1.get()
 	gate = c.BFS_find(gate_name)
@@ -110,7 +111,6 @@ def perform_op():
 	generate_circuit()
 
 	op_result = Label(op_frame, text=operation_str+ "(" + str(xval)+ ", "+ gate_name+ "), Old Score = " + str(old_score) + ", New Score = " + str(c.root.score)).grid()
-
 
 
 # Function for upload button for user to upload txt file with commands
@@ -137,11 +137,6 @@ def upload():
 		if not line.isspace():
 			exec(line)
 
-
-	# mb.showinfo(
-	# 	title='Selected File',
-	# 	message=better_lines
-	# )
 
 # Generates genetic circuit stats and graph based on gates and connections that user created
 def generate_circuit():
@@ -195,11 +190,6 @@ def generate_circuit():
 		combo1['values'] = gates
 
     
-# Automatically performs the operations that best optimize the circuit
-def optimize_circuit():
-	#connect with optimization function and produce message window comparing
-	#the results of the old and optimized circuit
-	return
 
 # Clears all gates selected/created and erases graph + stats from window
 def reset():
@@ -225,23 +215,17 @@ def reset():
 
 	# need to delete gate objects
 
-# Automatically retrieving list of promoter names, gate names and output names
-# promoters = read.read_input_json(library_path + '/' + chassis_name + '.input.json')[1]
-
-# UCF_gates = read.read_ucf_json(library_path + '/' + chassis_name + '.UCF.json')[1]
-
-# output_gates = read.read_output_json(library_path + '/' + chassis_name + '.output.json')[1]
 
 gates=[]
 
 operations = (
 	"stretch",
-	"increase slope",
-	"decrease slope",
+	"increase_slope",
+	"decrease_slope",
 	"stronger_prom",
 	"weaker_prom",
-	"stronger RBS",
-	"weaker RBS"
+	"stronger_RBS",
+	"weaker_RBS"
 	)
 
 # Creating comboboxes for different selections user can make in designing circuit
@@ -250,18 +234,6 @@ combo1.set("Select gate to modify")
 combo1.bind("<<ComboboxSelected>>", selected_g)
 combo1['state'] = 'readonly'
 combo1.grid(row=1, column=4)
-
-# combo2 = ttk.Combobox(root, value=UCF_gates)
-# combo2.set("Select UCF gate(s)")
-# combo2.bind("<<ComboboxSelected>>", selected_g)
-# combo2['state'] = 'readonly'
-# combo2.grid(row=2, column=3)
-
-# combo3 = ttk.Combobox(root, value=output_gates)
-# combo3.set("Select output gate(s)")
-# combo3.bind("<<ComboboxSelected>>", selected_o)
-# combo3['state'] = 'readonly'
-# combo3.grid(row=3, column=3)
 
 combo2 = ttk.Combobox(root, value=operations)
 combo2.set("Select operation to perform")

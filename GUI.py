@@ -141,10 +141,10 @@ def generate_circuit():
 		canvas.get_tk_widget().grid()
 
 		for name in c.adjList:
-			if(name != c.root.name and name not in gates):
+			if(name != c.root.name):
 				gates.append(name)
 
-		combo1['values'] = gates
+		combo1['values'] = list(set(gates))
 
 
 # Function for operation on gate

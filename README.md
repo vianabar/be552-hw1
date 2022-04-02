@@ -30,9 +30,9 @@
         
         Genetic circuit files are in “.txt” form. 
 
-    To create an input signal (example):
-        gate_a = copy.deepcopy(input_signals['pTet'])
-        gate_b = copy.deepcopy(input_signals['pLuxStar'])
+        To create an input signal (example):
+            gate_a = copy.deepcopy(input_signals['pTet'])
+            gate_b = copy.deepcopy(input_signals['pLuxStar'])
 
         To create a UCF gate (example): 
             gate_c = copy.deepcopy(ucf_signals['S1_SrpR'])
@@ -50,8 +50,8 @@
         To connect an input signal/gate to an output signal/gate in form (example):
         
             c.addEdge(gate_a,gate_c)
-    c.addEdge(gate_b,gate_c)
-    c.addEdge(gate_c,gate_d)
+            c.addEdge(gate_b,gate_c)
+            c.addEdge(gate_c,gate_d)
 
         To perform an operation on a gate/signal (example): 
             c.operate(<operation string>, x_value, gate_a)

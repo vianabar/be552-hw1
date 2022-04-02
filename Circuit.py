@@ -7,6 +7,11 @@ import Gate
 
 
 # Adapted from: https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
+
+# Circuit class is a graph of signal/gate vertices
+# Graph actually takes shape of a tree in which output is root, UCF gates are children in between,
+# Input signals are leaves
+
 class Circuit:
     def	__init__(self):
         self.adjList = defaultdict(list) #adjacency list
@@ -15,6 +20,7 @@ class Circuit:
         self.visual = []
         self.root = None
     
+# Clear Circuit class to reset 
     def clear(self):
         self.adjList = defaultdict(list) #adjacency list
         self.V = 0 #num of vertices
@@ -22,7 +28,7 @@ class Circuit:
         self.visual = []
         self.root = None
     
-
+# Add gate/signal to circuit
     def addVertex(self, gate):
         self.V = self.V + 1
         new_name = gate.name + ': 0'
@@ -35,6 +41,7 @@ class Circuit:
         if gate.gate_type == 'Output':
             self.root = gate
 
+# Add connection between gates and signals
     def addEdge(self, in_gate, out_gate):
         out_gate.assign_input(in_gate)
         self.adjList[out_gate.name] = out_gate.inputs
@@ -46,7 +53,8 @@ class Circuit:
         G.add_edges_from(self.visual)
         return G
 
-
+# Breadth-First-Search to print statistics of gates and signals
+# Starting with the output signal first, then backtracking
     def BFS(self): 
         circuit_str = ""
         
@@ -77,12 +85,17 @@ class Circuit:
         self.visualize()
         '''
 
+# Recursively calculate truth table/score for gates/signals,
+# Starting from input signal leaf nodes and ending at ouput signal
+# Root node
     def post_order_score(self, output_gate):
         for input_gate in output_gate.inputs:
             self.post_order_score(input_gate)
         output_gate.calculate_truth_table()
         output_gate.calculate_score()
 
+# Find a gate of a certain name through BFS, useful for 
+# doing operations on specific gates through UI
     def BFS_find(self, gate_name): # input s is output_gate
         
         s = self.root
@@ -110,7 +123,8 @@ class Circuit:
         return
 
 
-
+# Do operation on a UCF gate or input signal, recursively
+# calculate score
     
     def operate(self, operation, x, gate):
         if operation == "stretch":

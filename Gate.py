@@ -3,6 +3,7 @@ import math
 def round_sig(x, sig=5):
     return round(x, sig-int(math.floor(math.log10(abs(x))))-1)
 
+# Gate class for input signals, UCF gates, and output signals
 class Gate:
     def	__init__(self, name, ymax, ymin, n, k, gate_type):
         self.name = name
@@ -23,13 +24,13 @@ class Gate:
             self.calculate_truth_table()
             self.calculate_score()
             
-
+# Prints gate class (purpose-made for graph display in UI)
     def __str__(self):
         
         return str(self.name) + '\n' + \
                str(self.gate_type) +'\n\n'
 
-
+# Used in BFS() to print the total statistics of each signal/gate
     def get_stats(self): 
         if self.gate_type == 'Output':
             return "Name: " + str(self.name) + '\n' + \
@@ -49,7 +50,8 @@ class Gate:
                 "Inputs: " + ', '.join(input.name for input in self.inputs) + '\n' + \
                 "Truth Table: " + '\n' + \
                 self.print_truth_table() + '\n\n'
-    
+
+# Prints truth table for UCF gates 
     def print_truth_table(self):
         truth_table_str = ""
         
@@ -75,10 +77,11 @@ class Gate:
                               "| " + str(" " * 12) + " | " + str(" " * 12) + " | " + str(" " * 12) + " |"
                 
         return truth_table_str
-    
+
     def change_name(self, new_name):
         self.name = new_name
-    
+
+# DNA and protein engineering operations
     def stretch(self, x):
         if (x > 1.5):
             raise ValueError("x can be at-most 1.5")
@@ -130,6 +133,7 @@ class Gate:
         self.calculate_truth_table()
         self.calculate_score()
     
+# Connects input nodes to output node, limit to 0-2 inputs
     def assign_input(self, gate=None):
         if (len(self.inputs) >= 2):
             raise ValueError("Exceeded Maximum of 2 Inputs")
@@ -139,12 +143,14 @@ class Gate:
         if self.gate_type != 'Output':
             self.calculate_truth_table()
         self.calculate_score()
-        
+
+# Disconnects inputs
     def erase_inputs(self):
         self.inputs = []
         self.calculate_truth_table()
         self.calculate_score()
-        
+
+# Helper function to calculate response
     def calculate_y(self, in_0, in_1):
         
         x = in_0 + in_1
@@ -154,6 +160,7 @@ class Gate:
         
         return output
     
+# Calculate truth table
     def calculate_truth_table(self):
         
         # Zero inputs
@@ -209,7 +216,7 @@ class Gate:
                 ## |1|1|   |0|
                 self.truth_table_bool = [1, 0, 0, 0]
 
-
+    #Calculate output score using truth table and truth_table_bool
     def calculate_score(self):
         
         # Output

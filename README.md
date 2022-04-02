@@ -12,18 +12,18 @@
         conda create -n newenv python
         conda activate newenv
         pip install -r requirements.txt  
-        
-	git clone https://github.com/vianabar/be552-hw1.git
+	    git clone https://github.com/vianabar/be552-hw1.git
 
 3. How to use:
 
     3.1. Preparing libraries:
         Three parts library files must be created in the form for the program to work:
-            <chassis organism name>.input.json 
-            <chassis organism name>.UCF.json
-            <chassis organism name>.output.json
+            chassis_organism_name.input.json
+            chassis_organism_name.UCF.json
+            chassis_organism_name.output.json
 
-        Read https://www.nature.com/articles/s41596-021-00675-2, Supplementary Information: Section 6
+            Read https://www.nature.com/articles/s41596-021-00675-2, Supplementary Information: Section 6
+            for more information on json formatting for the parts library files
 
 
     3.2. Preparing genetic circuit files:
@@ -56,7 +56,7 @@
         To perform an operation on a gate/signal (example): 
             c.operate(<operation string>, x_value, gate_a)
 
-    **Operation strings are ‘stretch’ (x <= 1.5), ‘increase_slope’ (x <= 1.05), ‘decrease_slope(x <= 1.05), ‘stronger_prom’, ‘weaker_prom’, ‘stronger RBS’, ‘weaker_RBS’
+        **Operation strings are ‘stretch’ (x <= 1.5), ‘increase_slope’ (x <= 1.05), ‘decrease_slope(x <= 1.05), ‘stronger_prom’, ‘weaker_prom’, ‘stronger RBS’, ‘weaker_RBS’
 
 3.3. Running the program:
 	

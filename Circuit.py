@@ -27,9 +27,8 @@ class Circuit:
         self.V = self.V + 1
         new_name = gate.name + ': 0'
         gate.name = new_name
-        if gate.name in self.adjList: # if gate: num exists, assign new 
-            new_name = gate.name[:-1] + str(int(gate.name[-1]) + 1)
-            gate.name = new_name
+        while gate.name in self.adjList: # if gate: num exists, assign new 
+            gate.name = gate.name[:-1] + str(int(gate.name[-1]) + 1)
 
         self.adjList[gate.name] = gate.inputs
         self.visited[gate.name] = False

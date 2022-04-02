@@ -1,6 +1,6 @@
 gate_a = copy.deepcopy(input_signals['pBAD'])
 gate_b = copy.deepcopy(input_signals['pBAD'])
-gate_c = copy.deepcopy(input_signals['pTet'])
+gate_c = copy.deepcopy(input_signals['pBAD'])
 
 gate_d = copy.deepcopy(ucf_signals['P2_PhlF'])
 gate_e = copy.deepcopy(ucf_signals['P2_PhlF'])

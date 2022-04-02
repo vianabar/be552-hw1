@@ -84,4 +84,7 @@
     Press “Perform Operation”.
 
 
+3.4. Example files:
 
+    Example working gene circuit files are in ".txt" form in the "good_circuits" directory
+    Example input, UCF, output library for chassis "Eco1C1G1T1" are in ".json" form in the "input" directory
